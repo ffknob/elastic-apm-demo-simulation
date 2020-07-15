@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@ffknob/elastic-apm-demo-shared": "^1.0.12",
+    "@ffknob/elastic-apm-demo-shared": "^1.0.14",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/debug": "^4.1.5",

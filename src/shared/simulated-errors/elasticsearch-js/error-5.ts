@@ -6,16 +6,16 @@ const STATUS_CODE: number = 500;
 const ERROR_MESSAGE: string = 'Connection with id "1234" is already present';
 
 export default class _ implements SimulatedErrorFactory {
-  category: string = CATEGORY;
+    category: string = CATEGORY;
 
-  generate = () => {
-    const error: SimulatedError = {
-      name: 'Simulated Error: Elasticsearch',
-      category: CATEGORY,
-      statusCode: STATUS_CODE,
-      message: ERROR_MESSAGE,
+    generate = () => {
+        const error: SimulatedError = {
+            name: 'Simulated Error: Elasticsearch',
+            category: CATEGORY,
+            code: STATUS_CODE,
+            message: ERROR_MESSAGE
+        };
+
+        return error;
     };
-
-    return error;
-  };
 }

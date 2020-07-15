@@ -1,30 +1,46 @@
 import { Request, Response, NextFunction } from 'express';
 
 import {
-    SimulationRequest,
-    SimulationResponse
+    BackendSuccess,
+    BackendError,
+    SimulationResponseResult
 } from '@ffknob/elastic-apm-demo-shared';
 
 import Simulation from '../services/simulation';
 import SimulationRequestLocals from '../shared/interfaces/simulation-request-locals';
+
+const sendSuccess = (
+    simulationRequestLocals: SimulationRequestLocals,
+    res: Response
+) => {
+    const simulationResponseResult: SimulationResponseResult = {
+        success: true
+    };
+
+    const backendSuccess: BackendSuccess<SimulationResponseResult> = {
+        id: simulationRequestLocals.id,
+        success: true,
+        statusCode: 200,
+        statusMessage: 'OK',
+        metadata: simulationRequestLocals.metadata,
+        body: simulationResponseResult
+    };
+
+    res.status(200).json(backendSuccess);
+};
 
 const generateSuccess = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const simulationRequest: SimulationRequestLocals =
+    const simulationRequestLocals: SimulationRequestLocals =
         res.locals.simulationRequest;
     const simulation: Simulation = new Simulation();
 
-    await simulation.generateSuccess(simulationRequest);
+    await simulation.generateSuccess(simulationRequestLocals);
 
-    const simulationResponse: SimulationResponse = {
-        success: true,
-        metadata: res.locals.metadata
-    };
-
-    res.status(200).json(simulationResponse);
+    sendSuccess(simulationRequestLocals, res);
 };
 
 const generateThrownError = async (
@@ -32,12 +48,12 @@ const generateThrownError = async (
     res: Response,
     next: NextFunction
 ) => {
-    const simulationRequest: SimulationRequestLocals =
+    const simulationRequestLocals: SimulationRequestLocals =
         res.locals.simulationRequest;
     const simulation: Simulation = new Simulation();
 
     try {
-        await simulation.generateThrownError(simulationRequest);
+        await simulation.generateThrownError(simulationRequestLocals);
     } catch (err) {
         next(err);
     }
@@ -48,11 +64,11 @@ const generateCapturedError = async (
     res: Response,
     next: NextFunction
 ) => {
-    const simulationRequest: SimulationRequestLocals =
+    const simulationRequestLocals: SimulationRequestLocals =
         res.locals.simulationRequest;
     const simulation: Simulation = new Simulation();
 
-    await simulation.generateCapturedError(simulationRequest);
+    await simulation.generateCapturedError(simulationRequestLocals);
 };
 
 const generateComplexTransaction = async (
@@ -60,13 +76,13 @@ const generateComplexTransaction = async (
     res: Response,
     next: NextFunction
 ) => {
-    const simulationRequest: SimulationRequestLocals =
+    const simulationRequestLocals: SimulationRequestLocals =
         res.locals.simulationRequest;
     const simulation: Simulation = new Simulation();
 
-    await simulation.generateComplexTransaction(simulationRequest);
+    await simulation.generateComplexTransaction(simulationRequestLocals);
 
-    res.status(200).send();
+    sendSuccess(simulationRequestLocals, res);
 };
 
 const generateDistributedTransaction = async (
@@ -75,13 +91,13 @@ const generateDistributedTransaction = async (
     next: NextFunction
 ) => {
     generateSuccess;
-    const simulationRequest: SimulationRequestLocals =
+    const simulationRequestLocals: SimulationRequestLocals =
         res.locals.simulationRequest;
     const simulation: Simulation = new Simulation();
 
-    await simulation.generateDistributedTransaction(simulationRequest);
+    await simulation.generateDistributedTransaction(simulationRequestLocals);
 
-    res.status(200).send();
+    sendSuccess(simulationRequestLocals, res);
 };
 
 export default {

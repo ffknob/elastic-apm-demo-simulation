@@ -10,6 +10,7 @@ const requestParser = (req: Request, res: Response, next: NextFunction) => {
     const simulationParameters = req.body.parameters;
     const simulationOptions = req.body.options;
 
+    const { id } = req.body.id;
     const { maxRandomDelay } = simulationParameters;
     const {
         randomUserContext,
@@ -22,7 +23,8 @@ const requestParser = (req: Request, res: Response, next: NextFunction) => {
         distributedTransaction
     } = simulationOptions;
 
-    const simulationRequest: SimulationRequestLocals = {
+    const simulationRequestLocals: SimulationRequestLocals = {
+        id,
         maxRandomDelay,
         randomUserContext,
         userContext,

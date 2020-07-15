@@ -6,7 +6,7 @@ import {
     HostMetadata,
     ContainerMetadata,
     KubernetesMetadata,
-    SimulationResponseMetadata
+    BackendResponseMetadata
 } from '@ffknob/elastic-apm-demo-shared';
 
 const metadataMiddleware = (
@@ -37,7 +37,7 @@ const metadataMiddleware = (
         kubernetesPodUid: process.env.KUBERNETES_POD_UID
     };
 
-    const metadata: Partial<SimulationResponseMetadata> = {
+    const metadata: Partial<BackendResponseMetadata> = {
         host: hostMetadata,
         container: containerMetadata,
         kubernetes: kubernetesMetadata
