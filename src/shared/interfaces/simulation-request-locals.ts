@@ -5,7 +5,7 @@ import {
 } from '@ffknob/elastic-apm-demo-shared';
 
 export default interface SimulationRequestLocals {
-    id: Request['id'];
+    id: Request<SimulationRequest>['id'];
     maxRandomDelay: SimulationRequest['parameters']['maxRandomDelay'];
     randomUserContext: SimulationRequest['options']['randomUserContext'];
     userContext: SimulationRequest['options']['userContext'];

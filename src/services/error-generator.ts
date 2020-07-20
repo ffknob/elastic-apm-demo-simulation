@@ -1,11 +1,11 @@
-import SimulatedError from '../models/simulated-error';
-import SimulatedErrorFactory from '../models/simulated-error-factory';
+import { SimulatedError } from '../models';
+import { SimulatedErrorFactory } from '../models';
 import SIMULATED_ERRORS from '../shared/simulated-errors/simulated-errors';
 
 class ErrorGenerator {
     constructor() {}
 
-    getRandomError(category?: string): SimulatedError {
+    getRandomError<T = any>(category?: string): SimulatedError<T> {
         const errors = SIMULATED_ERRORS.filter(e =>
             !category ? true : e.category === category
         );

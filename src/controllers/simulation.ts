@@ -23,7 +23,7 @@ const sendSuccess = (
         statusCode: 200,
         statusMessage: 'OK',
         metadata: simulationRequestLocals.metadata,
-        body: simulationResponseResult
+        data: simulationResponseResult
     };
 
     res.status(200).json(backendSuccess);

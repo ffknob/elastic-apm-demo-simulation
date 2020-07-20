@@ -15,7 +15,6 @@ import {
 } from '@ffknob/elastic-apm-demo-shared';
 
 import simulationRoutes from './routes/simulation';
-import { SimulatedErrorData } from './shared/interfaces';
 import { SimulatedError } from './models';
 
 const apmService = ApmService.getInstance();
@@ -70,30 +69,30 @@ app.use('/api/v1/simulate', simulationRoutes);
 
 app.use(
     (
-        err: SimulatedError<SimulatedErrorData>,
+        err: SimulatedError<any>,
         req: Request,
         res: Response,
         next: NextFunction
     ) => {
         apmService.captureError(err);
 
-        const simulationResponseError: SimulationResponseError<SimulatedErrorData> = {
+        const simulationResponseError: SimulationResponseError<any> = {
             success: false,
             errors: [err]
         };
 
         const backendError: BackendError<SimulationResponseError<
-            SimulatedError<SimulatedErrorData>
+            SimulatedError<any>
         >> = {
             id: res.locals.id,
             success: false,
-            statusCode: err.code || 500,
-            statusMessage: err.message,
+            statusCode: err.code ? +err.code : 500,
+            statusMessage: err.message || 'Internal Server Error',
             metadata: res.locals.metadata,
             data: simulationResponseError
         };
 
-        res.status(err.code || 500).json(backendError);
+        res.status(err.code ? +err.code : 500).json(backendError);
     }
 );
 

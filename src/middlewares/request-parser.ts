@@ -23,7 +23,7 @@ const requestParser = (req: Request, res: Response, next: NextFunction) => {
         distributedTransaction
     } = simulationOptions;
 
-    const simulationRequestLocals: SimulationRequestLocals = {
+    const simulationRequestLocals: Partial<SimulationRequestLocals> = {
         id,
         maxRandomDelay,
         randomUserContext,
@@ -36,9 +36,9 @@ const requestParser = (req: Request, res: Response, next: NextFunction) => {
         distributedTransaction
     };
 
-    logger.debug(simulationRequest);
+    logger.debug(simulationRequestLocals);
 
-    res.locals.simulationRequest = simulationRequest;
+    res.locals.simulationRequest = simulationRequestLocals;
 
     next();
 };

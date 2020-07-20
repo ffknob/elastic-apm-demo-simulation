@@ -1,5 +1,4 @@
-import SimulatedError from '../../../models/simulated-error';
-import SimulatedErrorFactory from '../../../models/simulated-error-factory';
+import { SimulatedError, SimulatedErrorFactory } from '../../../models';
 
 const CATEGORY: string = 'elasticsearch-js';
 const STATUS_CODE: number = 500;
@@ -9,7 +8,7 @@ export default class _ implements SimulatedErrorFactory {
     category: string = CATEGORY;
 
     generate = () => {
-        const error: SimulatedError = {
+        const error: SimulatedError<any> = {
             name: 'Simulated Error: Elasticsearch',
             category: CATEGORY,
             code: STATUS_CODE,

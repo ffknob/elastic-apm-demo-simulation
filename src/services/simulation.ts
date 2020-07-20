@@ -12,7 +12,7 @@ import DelayGenerator from './delay-generator';
 import ErrorGenerator from './error-generator';
 import LabelGenerator from './label-generator';
 import { SimulationRequestLocals } from '../shared/interfaces';
-import SimulatedError from '../models/simulated-error';
+import { SimulatedError } from '../models';
 import { Transaction, Span } from '../shared/types/apm';
 
 class Simulation {
@@ -81,14 +81,14 @@ class Simulation {
         await this.init(simulationRequest, true);
 
         const errorGenerator: ErrorGenerator = new ErrorGenerator();
-        const error: SimulatedError = errorGenerator.getRandomError();
+        const error: SimulatedError<any> = errorGenerator.getRandomError<any>();
 
         apmService.captureError(error, {
             handled: false,
             custom: {
                 fake: true,
                 category: error.category,
-                statusCode: error.statusCode
+                code: error.code
             }
         });
     }
