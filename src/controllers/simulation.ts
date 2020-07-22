@@ -10,6 +10,8 @@ import Simulation from '../services/simulation';
 import SimulationRequestLocals from '../shared/interfaces/simulation-request-locals';
 
 const sendSuccess = (
+    statusCode: number,
+    statusMessage: string,
     simulationRequestLocals: SimulationRequestLocals,
     res: Response
 ) => {
@@ -20,13 +22,13 @@ const sendSuccess = (
     const backendSuccess: BackendSuccess<SimulationResponseResult> = {
         id: simulationRequestLocals.id,
         success: true,
-        statusCode: 200,
-        statusMessage: 'OK',
+        statusCode: statusCode,
+        statusMessage: statusMessage,
         metadata: simulationRequestLocals.metadata,
         data: simulationResponseResult
     };
 
-    res.status(200).json(backendSuccess);
+    res.status(statusCode).json(backendSuccess);
 };
 
 const generateSuccess = async (
@@ -40,7 +42,7 @@ const generateSuccess = async (
 
     await simulation.generateSuccess(simulationRequestLocals);
 
-    sendSuccess(simulationRequestLocals, res);
+    sendSuccess(200, 'Success', simulationRequestLocals, res);
 };
 
 const generateThrownError = async (
@@ -69,6 +71,8 @@ const generateCapturedError = async (
     const simulation: Simulation = new Simulation();
 
     await simulation.generateCapturedError(simulationRequestLocals);
+
+    sendSuccess(200, 'Error Captured', simulationRequestLocals, res);
 };
 
 const generateComplexTransaction = async (
@@ -82,7 +86,7 @@ const generateComplexTransaction = async (
 
     await simulation.generateComplexTransaction(simulationRequestLocals);
 
-    sendSuccess(simulationRequestLocals, res);
+    sendSuccess(200, 'Complex Transaction', simulationRequestLocals, res);
 };
 
 const generateDistributedTransaction = async (
@@ -97,7 +101,7 @@ const generateDistributedTransaction = async (
 
     await simulation.generateDistributedTransaction(simulationRequestLocals);
 
-    sendSuccess(simulationRequestLocals, res);
+    sendSuccess(200, 'Distributed Transaction', simulationRequestLocals, res);
 };
 
 export default {
