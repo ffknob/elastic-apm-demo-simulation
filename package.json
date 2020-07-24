@@ -1,7 +1,7 @@
 {
-  "name": "elastic-apm-demo",
+  "name": "elastic-apm-demo-simulation",
   "version": "1.0.0",
-  "description": "Elastic APM demo",
+  "description": "Elastic APM demo: Simulation",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
