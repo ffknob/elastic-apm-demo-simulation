@@ -1,19 +1,25 @@
 import axios from 'axios';
 import uuid from 'uuid';
 
-import { SimulationRequest, APMLabel } from '@ffknob/elastic-apm-demo-shared';
+import {
+    ApmService,
+    SimulationRequest,
+    APMLabel,
+    Transaction,
+    Span,
+    SimulationUserContext
+} from '@ffknob/elastic-apm-demo-shared';
 
-import SPAN_TYPES from '../shared/constants/span-types';
+import SPAN_TYPES from '@ffknob/elastic-apm-demo-shared';
 
 import { randomNumber } from '../shared/util';
 
-import ApmService from './apm';
 import DelayGenerator from './delay-generator';
 import ErrorGenerator from './error-generator';
 import LabelGenerator from './label-generator';
+
 import { SimulationRequestLocals } from '../shared/interfaces';
 import { SimulatedError } from '../models';
-import { Transaction, Span } from '../shared/types/apm';
 
 class Simulation {
     constructor() {}
@@ -40,7 +46,9 @@ class Simulation {
         const apmService = ApmService.getInstance();
         const delayGenerator = new DelayGenerator();
 
-        const userContext = this.createUserContext(simulationRequest);
+        const userContext: SimulationUserContext = this.createUserContext(
+            simulationRequest
+        );
         apmService.setUserContext(userContext);
 
         if (simulationRequest.randomLabels) {

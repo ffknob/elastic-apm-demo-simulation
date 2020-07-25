@@ -1,8 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import ApmService from './services/apm';
-
 import express, { Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -10,6 +8,7 @@ import winston from 'winston';
 import expressWinston from 'express-winston';
 
 import {
+    ApmService,
     SimulationResponseError,
     BackendError
 } from '@ffknob/elastic-apm-demo-shared';
@@ -65,7 +64,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-app.use('/api/v1/simulate', simulationRoutes);
+app.use('/', simulationRoutes);
 
 app.use(
     (
@@ -74,7 +73,7 @@ app.use(
         res: Response,
         next: NextFunction
     ) => {
-        apmService.captureError(err);
+        apmService.captureError(err.message!);
 
         const simulationResponseError: SimulationResponseError<any> = {
             success: false,
@@ -96,10 +95,6 @@ app.use(
     }
 );
 
-const MIDDLEWARE_PORT: Number = process.env.MIDDLEWARE_PORT
-    ? parseInt(process.env.MIDDLEWARE_PORT)
-    : 3000;
+const PORT: Number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-app.listen(MIDDLEWARE_PORT, () =>
-    console.log(`Server running on port ${MIDDLEWARE_PORT}`)
-);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

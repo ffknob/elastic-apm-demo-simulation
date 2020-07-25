@@ -2,6 +2,13 @@
   "name": "elastic-apm-demo-simulation",
   "version": "1.0.0",
   "description": "Elastic APM demo: Simulation",
+  "author": "Flávio Franco Knob <ffknob@gmail.com> (http://ffknob.com)",
+  "license": "ISC",
+  "homepage": "https://github.com/ffknob/elastic-apm-demo-simulation#readme",
+  "bugs": {
+    "url": "https://github.com/ffknob/elastic-apm-demo-simulation/issues"
+  },
+  "keywords": [],
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
@@ -9,11 +16,8 @@
     "dev": "nodemon --watch \"src/\" --exec \"ts-node src/app.ts\" -e ts",
     "lint": "./node_modules/.bin/eslint src/**/*.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@ffknob/elastic-apm-demo-shared": "^1.0.14",
+    "@ffknob/elastic-apm-demo-shared": "^1.0.19",
     "@types/cookie-parser": "^1.4.2",
     "@types/debug": "^4.1.5",
     "@types/dotenv": "^8.2.0",
@@ -39,7 +43,7 @@
     "elastic-apm-node": "^3.6.1",
     "express": "^4.17.1",
     "express-winston": "^4.0.3",
-    "fakerator": "^0.3.0",
+    "fakerator": "^0.3.1",
     "uuid": "^3.3.2",
     "winston": "^3.2.1"
   }
