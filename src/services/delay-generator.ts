@@ -1,15 +1,15 @@
 import { randomNumber } from '../shared/util';
 
 class DelayGenerator {
-    constructor() {}
+  constructor() {}
 
-    randomDelay(maxRandomDelay: number) {
-        const delay: number = randomNumber(maxRandomDelay);
+  randomDelay(maxRandomDelay: number) {
+    const delay: number = randomNumber(maxRandomDelay);
 
-        return new Promise<number>(resolve => {
-            setTimeout(() => resolve(delay), delay);
-        });
-    }
+    return new Promise<number>((resolve) => {
+      setTimeout(() => resolve(delay), delay);
+    });
+  }
 }
 
 export default DelayGenerator;

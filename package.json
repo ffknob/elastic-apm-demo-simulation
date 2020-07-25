@@ -14,10 +14,11 @@
     "build": "tsc -p .",
     "start": "ts-node ./src/app.ts",
     "dev": "nodemon --watch \"src/\" --exec \"ts-node src/app.ts\" -e ts",
-    "lint": "./node_modules/.bin/eslint src/**/*.ts"
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/**/*.ts"
   },
   "devDependencies": {
-    "@ffknob/elastic-apm-demo-shared": "^1.0.19",
+    "@ffknob/elastic-apm-demo-shared": "^1.0.21",
     "@types/cookie-parser": "^1.4.2",
     "@types/debug": "^4.1.5",
     "@types/dotenv": "^8.2.0",
@@ -31,6 +32,7 @@
     "eslint": "^6.7.2",
     "eslint-config-typescript": "^3.0.0",
     "nodemon": "^1.19.1",
+    "prettier": "^2.0.5",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.2"
   },
@@ -40,7 +42,6 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "elastic-apm-node": "^3.6.1",
     "express": "^4.17.1",
     "express-winston": "^4.0.3",
     "fakerator": "^0.3.1",

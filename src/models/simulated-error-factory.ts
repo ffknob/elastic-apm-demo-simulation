@@ -1,7 +1,7 @@
 import SimulatedError from './simulated-error';
 
 export default abstract class SimulatedErrorFactory {
-    abstract category: string;
+  abstract category: string;
 
-    abstract generate: <T>() => SimulatedError<T>;
+  abstract generate: <T>() => SimulatedError<T>;
 }

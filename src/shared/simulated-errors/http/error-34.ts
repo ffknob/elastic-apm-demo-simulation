@@ -5,16 +5,16 @@ const STATUS_CODE: number = 506;
 const ERROR_MESSAGE: string = 'Variant Also Negotiates';
 
 export default class _ extends SimulatedErrorFactory {
-    category: string = CATEGORY;
+  category: string = CATEGORY;
 
-    generate = () => {
-        const error: SimulatedError<any> = {
-            name: 'Simulated Error: HTTP',
-            category: CATEGORY,
-            code: STATUS_CODE,
-            message: ERROR_MESSAGE
-        };
-
-        return error;
+  generate = () => {
+    const error: SimulatedError<any> = {
+      name: 'Simulated Error: HTTP',
+      category: CATEGORY,
+      code: STATUS_CODE,
+      message: ERROR_MESSAGE,
     };
+
+    return error;
+  };
 }

@@ -8,9 +8,9 @@ import winston from 'winston';
 import expressWinston from 'express-winston';
 
 import {
-    ApmService,
-    SimulationResponseError,
-    BackendError
+  ApmService,
+  SimulationResponseError,
+  BackendError,
 } from '@ffknob/elastic-apm-demo-shared';
 
 import simulationRoutes from './routes/simulation';
@@ -36,63 +36,63 @@ console.log(`Background task #${backgroundTaskId}`);
 }, 50000);*/
 
 app.use(
-    expressWinston.logger({
-        transports: [new winston.transports.Console()],
-        meta: true,
-        msg: 'HTTP {{req.method}} {{req.url}}',
-        expressFormat: true,
-        colorize: false
-    })
+  expressWinston.logger({
+    transports: [new winston.transports.Console()],
+    meta: true,
+    msg: 'HTTP {{req.method}} {{req.url}}',
+    expressFormat: true,
+    colorize: false,
+  })
 );
 
 app.use(
-    expressWinston.errorLogger({
-        transports: [new winston.transports.Console()]
-    })
+  expressWinston.errorLogger({
+    transports: [new winston.transports.Console()],
+  })
 );
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'POST, GET, PATCH, DELETE, OPTIONS'
-    );
-    next();
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'POST, GET, PATCH, DELETE, OPTIONS'
+  );
+  next();
 });
 
 app.use('/', simulationRoutes);
 
 app.use(
-    (
-        err: SimulatedError<any>,
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
-        apmService.captureError(err.message!);
+  (
+    err: SimulatedError<any>,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    apmService.captureError(err.message!);
 
-        const simulationResponseError: SimulationResponseError<any> = {
-            success: false,
-            errors: [err]
-        };
+    const simulationResponseError: SimulationResponseError<any> = {
+      success: false,
+      errors: [err],
+    };
 
-        const backendError: BackendError<SimulationResponseError<
-            SimulatedError<any>
-        >> = {
-            id: res.locals.id,
-            success: false,
-            statusCode: err.code ? +err.code : 500,
-            statusMessage: err.message || 'Internal Server Error',
-            metadata: res.locals.metadata,
-            data: simulationResponseError
-        };
+    const backendError: BackendError<SimulationResponseError<
+      SimulatedError<any>
+    >> = {
+      id: res.locals.id,
+      success: false,
+      statusCode: err.code ? +err.code : 500,
+      statusMessage: err.message || 'Internal Server Error',
+      metadata: res.locals.metadata,
+      data: simulationResponseError,
+    };
 
-        res.status(err.code ? +err.code : 500).json(backendError);
-    }
+    res.status(err.code ? +err.code : 500).json(backendError);
+  }
 );
 
 const PORT: Number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
