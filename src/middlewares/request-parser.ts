@@ -1,49 +1,48 @@
 import { Request, Response, NextFunction } from 'express';
 
 import {
-  Request as _Request,
-  SimulationRequest,
+    Request as _Request,
+    SimulationRequest,
+    LoggerService
 } from '@ffknob/elastic-apm-demo-shared';
-
-import logger from '../services/logger';
 
 import SimulationRequestLocals from '../shared/interfaces/simulation-request-locals';
 
 const requestParser = (req: Request, res: Response, next: NextFunction) => {
-  const simulationParameters = req.body.parameters;
-  const simulationOptions = req.body.options;
+    const simulationParameters = req.body.parameters;
+    const simulationOptions = req.body.options;
 
-  const id: _Request<SimulationRequest>['id'] = req.body.id;
-  const { maxRandomDelay } = simulationParameters;
-  const {
-    randomUserContext,
-    userContext,
-    randomCustomContext,
-    customContext,
-    randomLabels,
-    labels,
-    complexTransaction,
-    distributedTransaction,
-  } = simulationOptions;
+    const id: _Request<SimulationRequest>['id'] = req.body.id;
+    const { maxRandomDelay } = simulationParameters;
+    const {
+        randomUserContext,
+        userContext,
+        randomCustomContext,
+        customContext,
+        randomLabels,
+        labels,
+        complexTransaction,
+        distributedTransaction
+    } = simulationOptions;
 
-  const simulationRequestLocals: Partial<SimulationRequestLocals> = {
-    id,
-    maxRandomDelay,
-    randomUserContext,
-    userContext,
-    randomCustomContext,
-    customContext,
-    randomLabels,
-    labels,
-    complexTransaction,
-    distributedTransaction,
-  };
+    const simulationRequestLocals: Partial<SimulationRequestLocals> = {
+        id,
+        maxRandomDelay,
+        randomUserContext,
+        userContext,
+        randomCustomContext,
+        customContext,
+        randomLabels,
+        labels,
+        complexTransaction,
+        distributedTransaction
+    };
 
-  logger.debug(simulationRequestLocals);
+    LoggerService.logger.debug(simulationRequestLocals);
 
-  res.locals.simulationRequest = simulationRequestLocals;
+    res.locals.simulationRequest = simulationRequestLocals;
 
-  next();
+    next();
 };
 
 export default { requestParser };
