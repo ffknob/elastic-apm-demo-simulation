@@ -64,7 +64,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-app.use('/', simulationRoutes);
+app.use(simulationRoutes);
 
 app.use(
     (
