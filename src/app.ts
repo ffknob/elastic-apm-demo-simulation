@@ -38,7 +38,7 @@ console.log(`Background task #${backgroundTaskId}`);
 app.use(
     expressWinston.logger({
         transports: [new winston.transports.Console()],
-        meta: true,
+        meta: false,
         msg: 'HTTP {{req.method}} {{req.url}}',
         expressFormat: true,
         colorize: false
